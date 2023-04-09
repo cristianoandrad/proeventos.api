@@ -52,15 +52,15 @@ namespace ProEventos.API.Controllers
                 if (await _accountService.UserExists(userDto.Username))
                      return BadRequest("Usuário já existe");
 
-                var uuser = await _accountService.CreateAccountAsync(userDto);
-                if (uuser != null)
-                    return Ok(uuser);
+                var user = await _accountService.CreateAccountAsync(userDto);
+                if (user != null)
+                    return Ok(user);
 
                 return BadRequest("Usuário não criado, tente novamente mais tarde!");
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar registrar usuário. Erro: {ex.Message}");
             }
         }
 
@@ -85,7 +85,26 @@ namespace ProEventos.API.Controllers
             }
             catch (Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário. Erro: {ex.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar realizar login. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPut("UpdateUser")]        
+        public async Task<IActionResult> UpdateUser(UserUpdateDto userUpdateDto)
+        {
+            try
+            {
+                var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
+                if (user == null) return Unauthorized("Usuário inválido");
+
+                var userReturn = await _accountService.UpdateAccount(userUpdateDto);
+                if (userReturn == null) return NoContent();
+
+                return Ok(userReturn);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
             }
         }
     }
