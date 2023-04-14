@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProEventos.Application.Services;
@@ -17,6 +18,7 @@ using ProEventos.Persistence.Context;
 using ProEventos.Persistence.Repository;
 using ProEventos.Persistence.Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -90,6 +92,60 @@ namespace ProEventos.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
+                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //{
+                //    Description = @"JWT Authorization header usando Bearer.
+                //                Entre com 'Bearer ' [espaço] então coloque seu token.
+                //                Exemplo: 'Bearer 12345abcdef'",
+                //    Name = "Authorization",
+                //    In = ParameterLocation.Header,
+                //    Type = SecuritySchemeType.ApiKey,
+                //    Scheme = "Bearer"
+                //});
+
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                //{
+                //    {
+                //        new OpenApiSecurityScheme
+                //        {
+                //            Reference = new OpenApiReference
+                //            {
+                //                Type = ReferenceType.SecurityScheme,
+                //                Id = "Bearer"
+                //            },
+                //            Scheme = "oauth2",
+                //            Name = "Bearer",
+                //            In = ParameterLocation.Header
+                //        },
+                //        new List<string>()
+                //    }
+                //});
+
+                c.AddSecurityDefinition("bearerAuth",
+                   new OpenApiSecurityScheme
+                   {
+                       In = ParameterLocation.Header,
+                       Description = "Copie e cole o JWT gerado pelo endpoint 'Autenticar'",
+                       Name = "Authorization",
+                       Scheme = "bearer",
+                       BearerFormat = "JWT",
+                       Type = SecuritySchemeType.Http
+                   });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "bearerAuth"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
         }
 
