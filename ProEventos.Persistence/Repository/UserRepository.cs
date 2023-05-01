@@ -24,7 +24,7 @@ namespace ProEventos.Persistence.Repository
         public async Task<User> GetUserByUserNameAsync(string userName)
         {
             return await _context.Users
-                .AsNoTracking()
+                //.AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserName.ToLower() == userName.ToLower());
         }
 
