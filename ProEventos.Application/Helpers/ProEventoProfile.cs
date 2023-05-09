@@ -2,6 +2,7 @@
 using ProEventos.Application.Dtos;
 using ProEventos.Domain.Identity;
 using ProEventos.Domain.Models;
+using ProEventos.Persistence.Models;
 
 namespace ProEventos.Application.Helpers
 {
