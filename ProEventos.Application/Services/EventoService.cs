@@ -87,7 +87,7 @@ namespace ProEventos.Application.Services
             }
         }
 
-        public async Task<EventoDto> GetAllEventoByIdAsync(int userId, int eventoId, bool includePalestrantes = false)
+        public async Task<EventoDto> GetEventoByIdAsync(int userId, int eventoId, bool includePalestrantes = false)
         {
             try
             {

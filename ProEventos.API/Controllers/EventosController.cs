@@ -56,7 +56,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.GetAllEventoByIdAsync(User.GetUserId(), id, true);
+                var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id, true);
 
                 if (evento is null) return NoContent();
 
@@ -107,7 +107,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.GetAllEventoByIdAsync(User.GetUserId(), id, true);
+                var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), id, true);
 
                 if (evento is null) return NoContent();
 
@@ -133,7 +133,7 @@ namespace ProEventos.API.Controllers
         {
             try
             {
-                var evento = await _eventoService.GetAllEventoByIdAsync(User.GetUserId(), eventoId, true);
+                var evento = await _eventoService.GetEventoByIdAsync(User.GetUserId(), eventoId, true);
                 if (evento is null) return NoContent();
 
                 var file = Request.Form.Files[0];
