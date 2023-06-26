@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProEventos.API.Helpers;
+using ProEventos.API.Helpers.Interfaces;
 using ProEventos.Application.Services;
 using ProEventos.Application.Services.Interfaces;
 using ProEventos.Domain.Identity;
@@ -87,8 +89,11 @@ namespace ProEventos.API
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<ILoteService, LoteService>();
-            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IRedeSocialService, RedeSocialService>();
+            services.AddScoped<ITokenService, TokenService>();
+
+            services.AddScoped<IUtil, Util>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

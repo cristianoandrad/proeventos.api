@@ -50,16 +50,16 @@ namespace ProEventos.Application.Services
 
                 if (palestrante is null) return null;
 
-                var eventoUpdate = _mapper.Map<Palestrante>(model);
+                var palestranteUpdate = _mapper.Map<Palestrante>(model);
 
-                eventoUpdate.Id = palestrante.Id;
-                eventoUpdate.UserId = userId;
+                palestranteUpdate.Id = palestrante.Id;
+                palestranteUpdate.UserId = userId;
 
-                _palestranteRepository.Update<Palestrante>(eventoUpdate);
+                _palestranteRepository.Update<Palestrante>(palestranteUpdate);
 
                 var sucesso = _palestranteRepository.SaveChangesAsync();
 
-                var eventoRetorno = _mapper.Map<PalestranteDto>(eventoUpdate);
+                var eventoRetorno = _mapper.Map<PalestranteDto>(palestranteUpdate);
 
                 return await sucesso ? eventoRetorno : null;
             }
